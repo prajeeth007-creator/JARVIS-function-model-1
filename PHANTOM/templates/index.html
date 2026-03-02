@@ -1,180 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Chat UI</title>
+<meta charset="UTF-8">
+<title>PHANTOM</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <style>
-        :root{
-            --green:#3cff00;
-            --black:#0b0b0b;
-            --dark:#111;
-        }
+<style>
+:root{
+    --green:#3cff00;
+    --black:#0b0b0b;
+    --dark:#111;
+}
 
-        *{
-            box-sizing:border-box;
-            margin:0;
-            padding:0;
-            font-family:'Montserrat', sans-serif;
-        }
+body{
+    margin:0;
+    height:100vh;
+    background:var(--black);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial, sans-serif;
+    color:white;
+}
 
-        body{
-            height:100vh;
-            background:var(--black);
-            display:flex;
-            justify-content:center;
-            align-items:center;
-        }
+/* ===== MAIN CONTAINER ===== */
+.container{
+    width:420px;
+    height:650px;
+    background:var(--dark);
+    border-radius:16px;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 0 30px rgba(0,255,0,0.1);
+}
 
-        .chat-container{
-            width:420px;
-            height:600px;
-            background:var(--dark);
-            border-radius:16px;
-            display:flex;
-            flex-direction:column;
-            box-shadow:0 0 30px rgba(0,255,0,0.08);
-        }
+/* ===== HEADER ===== */
+.header{
+    text-align:center;
+    padding:12px;
+    color:var(--green);
+    border-bottom:1px solid rgba(60,255,0,0.2);
+    font-weight:bold;
+    letter-spacing:2px;
+}
 
-        .chat-header{
-            padding:15px;
-            text-align:center;
-            color:var(--green);
-            border-bottom:1px solid rgba(60,255,0,0.2);
-            font-weight:600;
-            letter-spacing:1px;
-        }
+/* ===== FACE PANEL ===== */
+.face-panel{
+    display:flex;
+    justify-content:center;
+    padding:20px;
+}
 
-        .chat-box{
-            flex:1;
-            padding:15px;
-            overflow-y:auto;
-        }
+.face-screen{
+    width:220px;
+    height:180px;
+    background:#a7ff83;
+    border-radius:18px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
 
-        .botText, .userText{
-            margin-bottom:12px;
-            line-height:1.4;
-        }
+.eyes{
+    display:flex;
+    gap:30px;
+    margin-bottom:15px;
+}
 
-        /* ✅ FIXED TEXT COLOR */
-        .botText span{
-            background:#1a1a1a;
-            color:#ffffff;
-            padding:10px 14px;
-            border-radius:12px 12px 12px 0;
-            display:inline-block;
-            max-width:80%;
-        }
+.eye{
+    width:22px;
+    height:22px;
+    background:#111;
+    border-radius:50%;
+}
 
-        .userText{
-            text-align:right;
-        }
+.mouth{
+    width:70px;
+    height:12px;
+    background:#111;
+    border-radius:10px;
+}
 
-        .userText span{
-            background:#202020;
-            color:#ffffff;
-            padding:10px 14px;
-            border-radius:12px 12px 0 12px;
-            display:inline-block;
-            max-width:80%;
-        }
+/* ===== CHAT AREA ===== */
+.chat-box{
+    flex:1;
+    padding:15px;
+    overflow-y:auto;
+}
 
-        .input-area{
-            padding:14px;
-            border-top:1px solid rgba(60,255,0,0.2);
-            position:relative;
-        }
+.botText span{
+    background:#1a1a1a;
+    padding:10px;
+    border-radius:10px;
+    display:inline-block;
+}
 
-        .input-area::before,
-        .input-area::after{
-            content:'';
-            position:absolute;
-            width:40px;
-            height:2px;
-            background:var(--green);
-        }
+.userText{
+    text-align:right;
+}
 
-        .input-area::before{
-            top:6px;
-            left:6px;
-        }
+.userText span{
+    background:#222;
+    padding:10px;
+    border-radius:10px;
+    display:inline-block;
+}
 
-        .input-area::after{
-            bottom:6px;
-            right:6px;
-        }
+/* ===== INPUT AREA ===== */
+.input-area{
+    padding:12px;
+    border-top:1px solid rgba(60,255,0,0.2);
+}
 
-        #textInput{
-            width:100%;
-            padding:12px;
-            background:transparent;
-            border:1px solid rgba(60,255,0,0.4);
-            border-radius:10px;
-            color:white;
-            outline:none;
-        }
+#textInput{
+    width:100%;
+    padding:10px;
+    background:transparent;
+    border:1px solid rgba(60,255,0,0.4);
+    color:white;
+    border-radius:8px;
+}
 
-        #buttonInput{
-            margin-top:10px;
-            width:100%;
-            padding:10px;
-            background:transparent;
-            border:1px solid var(--green);
-            color:var(--green);
-            border-radius:10px;
-            cursor:pointer;
-            font-weight:600;
-        }
+button{
+    width:100%;
+    margin-top:8px;
+    padding:10px;
+    background:transparent;
+    border:1px solid var(--green);
+    color:var(--green);
+    border-radius:8px;
+    cursor:pointer;
+}
 
-        #buttonInput:hover{
-            background:rgba(60,255,0,0.08);
-        }
-    </style>
+button:hover{
+    background:rgba(60,255,0,0.08);
+}
+</style>
 </head>
 
 <body>
 
-<div class="chat-container">
-    <div class="chat-header">J.A.R.V.I.S</div>
+<div class="container">
 
-    <div class="chat-box" id="chatbox">
-        <p class="botText"><span>System online.</span></p>
-    </div>
+<div class="header">P.H.A.N.T.O.M</div>
 
-    <div class="input-area">
-        <input type="text" id="textInput" placeholder="Type your message...">
-        <button id="buttonInput">Send</button>
+<!-- ===== FACE ===== -->
+<div class="face-panel">
+    <div class="face-screen">
+        <div class="eyes">
+            <div class="eye"></div>
+            <div class="eye"></div>
+        </div>
+        <div class="mouth" id="mouth"></div>
     </div>
 </div>
 
+<!-- ===== CHAT ===== -->
+<div class="chat-box" id="chatbox">
+    <p class="botText"><span>Phantom online.</span></p>
+</div>
+
+<!-- ===== INPUT ===== -->
+<div class="input-area">
+    <input id="textInput" type="text" placeholder="Say something...">
+    <button onclick="sendMessage()">Send</button>
+    <button id="micButton">🎤 Speak</button>
+</div>
+
+</div>
+
 <script>
-    function getUserResponse(){
-        let userText = $("#textInput").val();
-        if(userText === "") return;
+/* ===== SEND MESSAGE ===== */
+function sendMessage(){
+    let text = $("#textInput").val();
+    if(text === "") return;
 
-        let userHtml = '<p class="userText"><span>' + userText + '</span></p>';
-        $("#chatbox").append(userHtml);
-        $("#textInput").val("");
+    $("#chatbox").append('<p class="userText"><span>'+text+'</span></p>');
+    $("#textInput").val("");
 
-        $.get("/get", { userMessage: userText }).done(function(data){
-            let botHtml = '<p class="botText"><span>' + data + '</span></p>';
-            $("#chatbox").append(botHtml);
-            $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);
-        });
-    }
-
-    $("#buttonInput").click(function(){
-        getUserResponse();
+    $.get("/get",{ userMessage:text }).done(function(data){
+        $("#chatbox").append('<p class="botText"><span>'+data+'</span></p>');
+        $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);
+        speak(data);
     });
+}
 
-    $("#textInput").keypress(function(e){
-        if(e.which === 13){
-            getUserResponse();
-        }
-    });
+/* ===== ENTER KEY ===== */
+$("#textInput").keypress(function(e){
+    if(e.which == 13) sendMessage();
+});
+
+/* ===== TEXT TO SPEECH ===== */
+function speak(text){
+    const speech = new SpeechSynthesisUtterance(text);
+    speechSynthesis.speak(speech);
+}
+
+/* ===== VOICE INPUT ===== */
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
+recognition.lang = "en-US";
+
+$("#micButton").click(function(){
+    $("#mouth").css("height","25px");
+    recognition.start();
+});
+
+recognition.onresult = function(event){
+    let voiceText = event.results[0][0].transcript;
+    $("#textInput").val(voiceText);
+    sendMessage();
+};
+
+recognition.onend = function(){
+    $("#mouth").css("height","12px");
+};
 </script>
 
 </body>
